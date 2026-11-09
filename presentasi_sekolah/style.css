@@ -1,0 +1,101 @@
+:root{
+  --bg:#0f172a; --bg2:#1e293b; --card:rgba(30,41,59,.6);
+  --accent:#38bdf8; --accent2:#f472b6;
+  --text:#e2e8f0; --muted:#94a3b8; --line:#334155;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+  background:radial-gradient(circle at 20% 20%,#1e293b 0%,#0f172a 65%);
+  color:var(--text); overflow:hidden; display:flex; flex-direction:column;
+}
+
+/* Progress bar */
+.progress{position:fixed;top:0;left:0;right:0;height:4px;background:var(--bg2);z-index:10}
+.progress-bar{height:100%;width:0;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  transition:width .3s ease}
+
+/* Slide */
+#deck{flex:1;position:relative}
+.slide{
+  position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;
+  padding:60px 8vw; opacity:0; visibility:hidden; transform:translateY(24px);
+  transition:opacity .35s ease, transform .35s ease, visibility .35s;
+}
+.slide.active{opacity:1;visibility:visible;transform:none}
+.slide-inner{max-width:1000px;width:100%;margin:0 auto}
+
+/* Cover */
+h1{
+  font-size:clamp(2rem,5vw,3.8rem);line-height:1.15;margin-bottom:18px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.subtitle{font-size:clamp(1rem,2vw,1.4rem);color:var(--muted);margin-bottom:40px}
+.meta{font-size:1rem;color:var(--muted);line-height:1.9;
+  border-left:3px solid var(--accent);padding-left:18px}
+
+/* Judul slide isi */
+h2{font-size:clamp(1.5rem,3.5vw,2.5rem);margin-bottom:34px;position:relative;padding-bottom:16px}
+h2::after{content:'';position:absolute;left:0;bottom:0;width:70px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2))}
+h3{font-size:1.15em;margin-bottom:12px;color:var(--accent)}
+
+/* Konten */
+.content{font-size:clamp(1rem,1.6vw,1.25rem);line-height:1.8;color:#cbd5e1}
+.content ul{list-style:none;display:grid;gap:14px}
+.content ul li{position:relative;padding-left:32px}
+.content ul li::before{content:'▸';position:absolute;left:0;color:var(--accent);font-weight:700}
+.content p{margin-bottom:14px}
+.content strong{color:#fff}
+.content em{color:var(--muted)}
+
+/* Kartu */
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:18px 22px;margin-bottom:14px}
+.card ul{gap:8px}
+
+/* Grid 2 kolom */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+
+/* Tabel */
+table{width:100%;border-collapse:collapse;margin-top:8px;font-size:.95em}
+th,td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--line)}
+th{color:var(--accent);text-transform:uppercase;font-size:.78em;letter-spacing:.08em}
+tbody tr:hover,tr:hover td{background:rgba(56,189,248,.06)}
+
+/* Footer slide */
+.slide-footer{position:absolute;bottom:24px;left:8vw;right:8vw;
+  display:flex;justify-content:space-between;font-size:.8rem;color:#475569}
+
+/* Kontrol */
+.controls{
+  position:fixed;bottom:20px;right:20px;z-index:20;
+  display:flex;align-items:center;gap:10px;
+  background:rgba(15,23,42,.85);backdrop-filter:blur(10px);
+  padding:8px;border-radius:999px;border:1px solid var(--bg2);
+}
+.controls button{
+  width:40px;height:40px;border:none;border-radius:50%;
+  background:var(--bg2);color:var(--text);font-size:1.2rem;cursor:pointer;
+  transition:.2s;
+}
+.controls button:hover{background:var(--accent);color:var(--bg)}
+#counter{font-size:.85rem;color:var(--muted);min-width:56px;text-align:center}
+
+/* Mobile */
+@media(max-width:700px){
+  .grid-2{grid-template-columns:1fr}
+  .slide{padding:40px 6vw}
+  .slide-footer{display:none}
+}
+
+/* Cetak / simpan PDF (Ctrl+P) */
+@media print{
+  body{overflow:visible;background:#0f172a;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .slide{position:relative;opacity:1;visibility:visible;transform:none;
+         height:100vh;page-break-after:always}
+  .controls,.progress,.slide-footer{display:none}
+}
